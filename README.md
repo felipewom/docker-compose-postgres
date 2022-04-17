@@ -144,6 +144,19 @@ volumes:
 
 ```
 
+### Use a volume to add a postgres initialization script
+
+It is also possible to add an init script that will execute when the database is first run. Again, we can use a volume
+for this.
+
+```docker
+volumes:
+  # In this example, we share an init.sql script with the container
+  # The init script will be executed when the database is first run
+  - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+```
+
 ### Step 3. Run the Docker Compose
 
 Your Docker Compose is ready! 🚀
