@@ -1,5 +1,7 @@
 # Docker-Compose with PostgreSQL ready to use
 
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/felipewom)
+
 This tutorial teaches you how to create a Postgres Docker Compose file.
 
 >Last updated March 13, 2022 </br>
