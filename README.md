@@ -30,11 +30,12 @@ The first step consists of creating the configuration file to run Postgres in Do
 This file is called docker-compose.yml, and you can make it at your project's root. If you don't have any project yet, you can do it in a new folder on your computer.
 
 Once you created the Docker Compose file, your folder architecture should be similar as below.
-
+```
     .
     ├── [...]
     └── docker-compose.yml
     [...] directories, 1 file
+```
 
 ### Step 2. Configure your Postgres Docker Compose file
 
@@ -50,7 +51,7 @@ Below, you will find the Docker Compose file. Each line is commented on so that 
   
 **Database Service:**
 
-```docker
+```yaml
 # A Docker Compose must always start with the version tag.
 # We use '3' because it's the last version.
 version: '3'
@@ -109,19 +110,19 @@ Once you did it, it means your environment part isn't used anymore so that you c
 
 #### REMOVE THESE LINES FROM `docker-compose.yml`
 
-```docker
+```yaml
 environment:
-->  POSTGRES_USER=username # The PostgreSQL user (useful to connect to the database)
-->  POSTGRES_PASSWORD=password # The PostgreSQL password (useful to connect to the database)
+    POSTGRES_USER=username # The PostgreSQL user (useful to connect to the database)
+    POSTGRES_PASSWORD=password # The PostgreSQL password (useful to connect to the database)
 ```
 
 If you want that your Postgres Docker Compose find the environment variables, you should add the following lines:
 
 ### The `env_file` tag allows us to declare an environment file
 
-```docker
+```yaml
 env_file:
-- .env # The name of your environment file (the one at the repository root)
+    - .env # The name of your environment file (the one at the repository root)
 ```
 
 Your Docker Compose will use the environment variables defined inside the .env to configure the database.
@@ -134,16 +135,15 @@ To persist the data, we will use a Docker volume. It will share the database dat
 
 To do that, you can add the database section in the services node of your Docker Compose.
 
-```docker
+```yaml
 # The `volumes` tag allows us to share a folder with our container
 # Its syntax is as follows: [folder path on our machine]:[folder path to retrieve in the container]
 volumes:
-  # In this example, we share the folder `db-data` in our root repository, with the default PostgreSQL data path
-  # It means that every time the repository is modifying the data inside
-  # of `/var/lib/postgresql/data/`, automatically the change will appear in `db-data`
-  # You don't need to create the `db-data` folder. Docker Compose will do it for you
-  - ./db-data/:/var/lib/postgresql/data/
-
+    # In this example, we share the folder `db-data` in our root repository, with the default PostgreSQL data path
+    # It means that every time the repository is modifying the data inside
+    # of `/var/lib/postgresql/data/`, automatically the change will appear in `db-data`
+    # You don't need to create the `db-data` folder. Docker Compose will do it for you
+    - ./db-data/:/var/lib/postgresql/data/
 ```
 
 ### Use a volume to add a postgres initialization script
@@ -151,11 +151,11 @@ volumes:
 It is also possible to add an init script that will execute when the database is first run. Again, we can use a volume
 for this.
 
-```docker
+```yaml
 volumes:
-  # In this example, we share an init.sql script with the container
-  # The init script will be executed when the database is first run
-  - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    # In this example, we share an init.sql script with the container
+    # The init script will be executed when the database is first run
+    - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 ```
 
@@ -165,7 +165,9 @@ Your Docker Compose is ready! 🚀
 
 In the root of your project repository, type the following command to install the dependencies and run your database:
 
-> $ docker-compose up
+```shell
+docker-compose up
+```
 
 That's it; everything is set up! To test your database, you should connect to it using the software or programming language of your choice.
 
@@ -175,7 +177,9 @@ As a reminder, the Postgres database is accessible on localhost with the port 54
 
 As I mentioned before, one of the advantages of using Docker Compose for Postgres is to avoid background processes on your computer. When you finish working on your project, I recommend you to stop the running Postgres Docker container using the command below:
 
-> $ docker-compose down
+```shell
+docker-compose down
+```
 
 Once you want to work again on your project, you can use docker-compose up again to run your database.
 
