@@ -143,7 +143,7 @@ volumes:
     # It means that every time the repository is modifying the data inside
     # of `/var/lib/postgresql/data/`, automatically the change will appear in `db-data`
     # You don't need to create the `db-data` folder. Docker Compose will do it for you
-    - ./db-data/:/var/lib/postgresql/data/
+    - ${PWD}/db-data/:/var/lib/postgresql/data/
 ```
 
 ### Use a volume to add a postgres initialization script
@@ -155,7 +155,7 @@ for this.
 volumes:
     # In this example, we share an init.sql script with the container
     # The init script will be executed when the database is first run
-    - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    - ${PWD}/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 ```
 
