@@ -1,8 +1,21 @@
-version: '3'
 
 services:
+
+  db2rest:
+    image: 'kdhrubo/db2rest:latest'
+    privileged: true
+    ports:
+      - 18080:8080
+    env_file:
+      - .env
+    depends_on:
+      - database
+    networks:
+      - postgres-network
+  
   database:
     image: 'postgres:latest'
+    privileged: true
     ports:
       - 15432:5432
     env_file:
@@ -10,11 +23,12 @@ services:
     networks:
       - postgres-network
     volumes:
-      - ${PWD}/db-data/:/var/lib/postgresql/data/
+      - ${PWD}/tmp/db_data:/var/lib/postgresql/data/
       - ${PWD}/init.sql:/docker-entrypoint-initdb.d/init.sql
   
   pgadmin:
     image: dpage/pgadmin4
+    privileged: true
     ports:
       - 15433:80
     env_file:
@@ -24,7 +38,7 @@ services:
     networks:
       - postgres-network
     volumes:
-      - ${PWD}/pgadmin-data/:/var/lib/pgadmin/
+      - ${PWD}/tmp/pgadmin_data:/var/lib/pgadmin/
 
 networks: 
   postgres-network:
