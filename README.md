@@ -159,6 +159,30 @@ volumes:
 
 ```
 
+### Add a pgadmin service to access your database via a UI
+
+```yml
+services:
+
+  database:
+    ... # details from above
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 15433:80
+    env_file:
+      - .env
+    depends_on:
+      - database
+    networks:
+      - postgres-network
+    volumes:
+      - ${PWD}/pgadmin-data/:/var/lib/pgadmin/
+```
+
+The pgadmin service allows you - once run - to access your postgreSQL database via a browser and quickly inspect or manage your data from there. After you ran docker compose (see next step) you can access pgadmin at `localhost:15433` in your browser and login with the admin e-mail and password you specified in your `.env` file.
+
 ### Step 3. Run the Docker Compose
 
 Your Docker Compose is ready! 🚀
