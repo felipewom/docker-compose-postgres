@@ -181,7 +181,15 @@ services:
       - ${PWD}/pgadmin-data/:/var/lib/pgadmin/
 ```
 
-The pgadmin service allows you - once run - to access your postgreSQL database via a browser and quickly inspect or manage your data from there. After you ran docker compose (see next step) you can access pgadmin at `localhost:15433` in your browser and login with the admin e-mail and password you specified in your `.env` file.
+The pgadmin service allows you - once run - to access your postgreSQL database via a browser and quickly inspect or manage your data from there. 
+After you ran docker compose (see next step) you can access pgadmin at `localhost:15433` in your browser and login with the admin email and password as specified in the `.env` file.
+
+Once logged in, you need to connect to the database in your docker network.
+To do so, right click on 'servers' on the left side and go to 'Servers > Register > Server...'.
+In the general tab, specify a name of your liking.
+In the connection tab, as the host name enter the name of the postgres service in the docker-compose.yml file (in our case "database") and as the port the post inside the docker-network (in our case the default 5432).
+
+
 
 ### Step 3. Run the Docker Compose
 
