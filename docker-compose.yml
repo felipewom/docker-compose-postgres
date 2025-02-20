@@ -4,7 +4,7 @@ services:
   database:
     image: 'postgres:latest'
     ports:
-      - 15432:5432
+      - 5432:5432
     env_file:
       - .env
     networks:
